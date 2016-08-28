@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
-#romhartmann@gmail.com
+# romhartmann@gmail.com
+# j.mr.olsson@gmail.com
 
 def get_muon_position(sTableSetup=None):
     """
@@ -26,7 +27,7 @@ def get_muon_position(sTableSetup=None):
         if sTablePos not in dTablePos.keys():
             print "Table position not one of predefined positions"
             #return (rMuonMax-rMuonMin)/20   #half of max in cm
-            return sTablePos 
+            return sTablePos
         rThetaDeg = dTablePos[sTablePos]['Theta']
         rTheta = rThetaDeg * math.pi /180
         rTableZ = dTablePos[sTablePos]['Z']
@@ -49,7 +50,7 @@ def get_muon_position(sTableSetup=None):
 
     if sTableSetup not in dTablePos.keys() and sTableSetup!=None:
         #return 200   #half of max in cm
-        return "Undefined" 
+        return "Undefined"
     elif sTableSetup != None:
         return dMuonPos[sTableSetup]['Z']
     else:

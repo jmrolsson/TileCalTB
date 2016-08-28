@@ -9,7 +9,7 @@ import re
 # Created 2015-10-12
 
 #####
-# NOTE!! the program can only control the MuonWall position when the *red switch* is down on the Arduino 
+# NOTE!! the program can only control the MuonWall position when the *red switch* is down on the Arduino
 #####
 
 # This script is executed remotely
