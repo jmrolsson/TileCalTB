@@ -1,6 +1,6 @@
-#! /usr/bin/env python
-import serial
+#! /usr/bin/env python import serial import sys
 import sys
+import serial
 import time
 import datetime
 import re
@@ -8,12 +8,33 @@ import re
 # Joakim Olsson (joakim.olsson@cern.ch)
 # Created 2015-10-12
 
+# Test: python muon_wall_controller.py -z 150
+
 #####
-# NOTE!! the program can only control the MuonWall position when the *red switch* is down on the Arduino
+# NOTE!! The program can only control the MuonWall position when the *red switch* is down on the Arduino
+#
+# - Serial port permissions:
+# If you get a "permission denied" error on the serial port,
+# then add the 'table' user to the 'dialout' group:
+# > su
+# > sudo usermod -a -G dialout table
+# Then log out and log back in again, it should now work
+#
+# The quick brute-force way of setting the permissions on the serial port is:
+# > su
+# > sudo chmod 777 /dev/ttyACM0
 #####
 
 # This script is executed remotely
 def main(argv):
+    if len(argv) <= 1:
+        print '\nUsage:'
+        print 'python muon_wall_controller.py "TABLE_POSITION_STRING"'
+        print 'python muon_wall_controller.py -z Z_POSITION'
+	print '\nExample:'
+        print 'python muon_wall_controller.py "LB_eta-0.35"'
+        print 'python muon_wall_controller.py -z 150\n'
+	exit(0)
     if argv[1] == '-z':
         move_muon_wall(argv[2], sMode='number')
     else:
@@ -209,11 +230,11 @@ def move_muon_wall(sTableSetup, sMode='predefined'):
         f.write(sLogStop)
 
 def should_move(iNewPos, iCurrentPos, iError=5):
-	# do not move if already close to the physical boundary
-	if (iCurrentPos < 0 + iError):
-		return  False
-	if (iCurrentPos > 400 - iError):
-		return  False
+        # do not move when close to the edges
+        if ((iNewPos > 400 - iError) and (iCurrentPos > 400 - iError)):
+		return False
+        if ((iNewPos < 0 + iError) and (iCurrentPos < 0 + iError)):
+		return False
 	# do not move if already close to the new position
 	if (abs(iNewPos-iCurrentPos) < iError):
 		return False
