@@ -5,7 +5,7 @@ import time
 import datetime
 import re
 
-# Joakim Olsson (joakim.olsson@cern.ch)
+# Joakim Olsson, UChicago (joakim.olsson@cern.ch)
 # Created 2015-10-12
 
 # Test: python muon_wall_controller.py -z 150
