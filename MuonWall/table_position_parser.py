@@ -31,9 +31,9 @@ def parse_log(sLogFilePath):
     (sStdout, sErr) = oProc.communicate()
 
     try:
-        sLastLine = sStdout.split("\n")[-2]         #[-1] is '' because of last \n           
+        sLastLine = sStdout.split("\n")[-2]         #[-1] is '' because of last \n
         lLastLine = sLastLine.split()
-        
+
 
         return lLastLine
     except IndexError:
@@ -73,14 +73,14 @@ while True:
 
 
 
-    #move the muon wall
-    if sTableSetup:
-        from subprocess import Popen, PIPE
-        # sPC = "pc7600nr3"
-        sIP = "137.138.209.74"
-        sMoveCommand = "ssh {0} python /home/table/TileMoveTable/muon_wall_controller.py {1}".format(sIP, sTableSetup) 
-        #ssh 137.138.209.74 python /home/table/TileMoveTable/muon_wall_controller.py M0_20deg_A-3
-        Popen(sMoveCommand, stdin=PIPE, stdout=PIPE, shell=True)
+    # #move the muon wall
+    # if sTableSetup:
+    #     from subprocess import Popen, PIPE
+    #     # sPC = "pc7600nr3"
+    #     sIP = "137.138.209.74"
+    #     sMoveCommand = "ssh {0} python /home/table/TileMoveTable/muon_wall_controller.py {1}".format(sIP, sTableSetup)
+    #     #ssh 137.138.209.74 python /home/table/TileMoveTable/muon_wall_controller.py M0_20deg_A-3
+    #     Popen(sMoveCommand, stdin=PIPE, stdout=PIPE, shell=True)
 
 
 
@@ -119,7 +119,7 @@ while True:
         'TableSetup:={0}'.format(json.dumps(dTableMeta['sTableSetup'])),
         'TileTableTimeStamp:={0}'.format(json.dumps(dTableMeta['sTimeStamp'])),
         'TileTableLastAction:={0}'.format(json.dumps(dTableMeta['sAction'])),
-        'TileTableEncoders:={0}'.format(json.dumps(dTableMeta['lEncoded'])), 
+        'TileTableEncoders:={0}'.format(json.dumps(dTableMeta['lEncoded'])),
         'MuonTimeStamp:={0}'.format(json.dumps(dMuonMeta['sTimeStamp'])),
         'MuonLastAction:={0}'.format(json.dumps(dMuonMeta['sAction'])),
         'MuonPosition:={0}'.format(json.dumps(dMuonMeta['rMuonPosition'])),
