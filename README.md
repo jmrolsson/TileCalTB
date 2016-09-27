@@ -28,7 +28,7 @@ python muon_wall_controller.py -z 150
 
 This script is stored and executed on the 'table' computer:
 ```
-table@pc7600nr3.cern.ch:/home/table/TileMoveTable/muwall_cronjob.py
+table@pc7600nr3.cern.ch:/home/table/TileMoveTable/muon_wall_controller.py 
 ```
 
 ### Cronjob for automatically updating the position of the muon wall
