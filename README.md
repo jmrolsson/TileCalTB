@@ -13,7 +13,7 @@ Code for offline test beam data analysis.
 Scripts to automatically move the muon wall into the best position, based on the position of the table. 
 
 ### Script for moving the muon wall
-The main script for communication with the Arduino to move the muon wall is called 'muon_wall_controller.py'. It takes a table position string (such as "LB_eta-0.35") as input and translates that into a z-coordinate for the muon wall (which can move between z=0 and z=400 cm). You can also give it a z-coordinate directly by the "-z" option (see example below).
+The main script for communication with the Arduino to move the muon wall is called 'muon_wall_controller.py'. It takes a table position string (such as "LB_eta-0.35") as input and translates that into a z-coordinate for the muon wall (which can move between z=0 and z=400 cm). You can also give it a z-coordinate directly with the "-z" option (see example below).
 
 Usage:
 ```
@@ -26,10 +26,15 @@ python muon_wall_controller.py "LB_eta-0.35"
 python muon_wall_controller.py -z 150
 ```
 
+This script is stored and executed on the 'table' computer:
+```
+table@pc7600nr3.cern.ch:/home/table/TileMoveTable/muwall_cronjob.py
+```
+
 ### Cronjob for automatically updating the position of the muon wall
 A shell script (meant to be run as a cronjob) automatically reads the log file of the table and the log file for the muon wall, compares the last known positions, and updates the position of the muon wall if necessary. 
 
-This script is named 'muwall_cronjob.py'
+The cronjob is setup as follows:
 
 ```
 [table@pc7600nr3]~% crontab -ls
@@ -38,8 +43,10 @@ This script is named 'muwall_cronjob.py'
 
 ### Script to parse the position of the table and the muon wall from the log files into the IS database
 
-This script is called 'table_position_parser.py' and is stored in: '/afs/cern.ch/user/t/tiledemo/public/Prometeo/Prometeo-1.0.1/TablePositionParser/share'
-
+This script is called 'table_position_parser.py' and is stored in: 
+```
+/afs/cern.ch/user/t/tiledemo/public/Prometeo/Prometeo-1.0.1/TablePositionParser/share
+```
 
 ## TriggerAndCalib
 
