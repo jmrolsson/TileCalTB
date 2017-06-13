@@ -15,7 +15,7 @@ from root_numpy import root2array, tree2array, fill_hist
 # python CalibrateBeamChambers.py --beam-chamber <bc_number> -l <left_up_run> -c <center_run> -r <right_down_run> --plots
 
 # Example:
-# python CalibrateBeamChambers.py --beam-chamber 1 -l 611274 -c 611276 -r 611278 --input-path tiletb_September2016 --output_path test --plots
+# python CalibrateBeamChambers.py --beam-chamber 1 -l 611274 -c 611276 -r 611278 --plots
 
 def main():
 
@@ -35,7 +35,7 @@ def main():
 
     if len(sys.argv) < 2:
         parser.print_help()
-        print('\nEx. python CalibrateBeamChambers.py -bc 1 -lu 611274 -c 611276 -rd 611278 --input-path tiletb_September2016 --plots\n')
+        print('\nEx. python CalibrateBeamChambers.py --beam-chamber 1 -l 611274 -c 611276 -r 611278 --plots\n')
         sys.exit(1)
 
     args = parser.parse_args()
@@ -75,10 +75,10 @@ def main():
         runs_tag = 'lu'
         for run in args.runs_lu:
             runs_tag += '_{:d}'.format(run)
-        runs_tag = '_c'
+        runs_tag += '_c'
         for run in args.runs_c:
             runs_tag += '_{:d}'.format(run)
-        runs_tag = '_rd'
+        runs_tag += '_rd'
         for run in args.runs_rd:
             runs_tag += '_{:d}'.format(run)
 
@@ -93,9 +93,12 @@ def main():
 
 def get_pos(runs, bc=1, nevents = -1, treename = 'h1000', input_path = './', output_path = './', save_plots = False, debug = False, cut_min = 0, cut_max = 10000):
 
+
+    runs_tag = ''
     chain = TChain(treename)
     for run in runs:
         chain.Add(input_path+'/tiletb_{}.root'.format(run))
+        runs_tag += '_{:d}'.format(run)
 
     # mapping of beam chamber outputs (from the TDC)
     # BC1 : left = 0, right = 1, up = 2, down = 3
@@ -161,7 +164,7 @@ def get_pos(runs, bc=1, nevents = -1, treename = 'h1000', input_path = './', out
         h.hists['deltax'].Draw('hist')
         c1.cd(4)
         h.hists['deltay'].Draw('hist')
-        c1.SaveAs(os.path.join(output_path, 'calibration_pos_bc_{}_run_{}.pdf'.format(bc, run)))
+        c1.SaveAs(os.path.join(output_path, 'calibration_pos_bc_{}_run{}.pdf'.format(bc, runs_tag)))
         c2 = TCanvas()
         c2.SetLeftMargin(0.12)
         c2.SetRightMargin(0.15)
@@ -173,7 +176,7 @@ def get_pos(runs, bc=1, nevents = -1, treename = 'h1000', input_path = './', out
         c2.SetTicky()
         h.hists['deltay_vs_deltax'].SetTitle('')
         h.hists['deltay_vs_deltax'].Draw('colz')
-        c2.SaveAs(os.path.join(output_path, 'calibration_pos_deltay_vs_deltax_bc_{}_run_{}.pdf'.format(bc, run)))
+        c2.SaveAs(os.path.join(output_path, 'calibration_pos_deltay_vs_deltax_bc_{}_run{}.pdf'.format(bc, runs_tag)))
 
     return { 'x' : deltax_avg, 'xerr' : deltax_std, 'y' : deltay_avg, 'yerr' : deltay_std }
 

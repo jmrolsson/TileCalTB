@@ -59,10 +59,15 @@ Usage:
 python CalibrateBeamChambers.py --beam-chamber <bc_number> -l <left_up_run> -c <center_run> -r <right_down_run> --plots
 ```
 
-Example:
+Examples:
 ```
 python CalibrateBeamChambers.py --beam-chamber 1 -l 611274 -c 611276 -r 611278 --plots
 ```
+```
+python -b CalibrateBeamChambers.py --beam-chamber 1 -l 611274 611275 -c 611276 611277 -r 611278 611279 --plots
+```
+
+
 
 ## ScopeTraces
 
